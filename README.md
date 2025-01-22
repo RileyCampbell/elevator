@@ -20,35 +20,45 @@ A simple Java-based simulation of an elevator system with a graphical user inter
 - The elevator processes requests sequentially. It will complete a request before moving to the next one.
 - The elevator moves either "Up" or "Down" to reach the requested floor. It doesn’t have complex scheduling, so it doesn't optimize the path between multiple requests.
 
-## Build/Compile
+## Requirements
 
-1. **Navigate to the `src` directory**:
+- **Java 21** (or compatible version)
+- **Gradle** (version 8.0 or higher)
+- **JUnit 5** for testing
+
+## Building the Project
+
+1. **Clone the repository**:
     ```bash
-    cd Elevator/src
+    git clone <repository-url>
+    cd elevator
     ```
-2. **Compile the code**:*
+
+2. **Build the project**:
+    Gradle will automatically download and set up dependencies for you. To build the project, run the following command:
     ```bash
-    javac elevator/*.java
+    ./gradlew build
     ```
 
-## Run
+    This will compile the code, resolve dependencies, and create an executable JAR file.
 
-1. **Navigate to the `src` directory**:
-  ```bash
-  cd Elevator/src
-  ```
-2. **Run the program**:
-  ```bash
-  java elevator.Main
-  ```
+## Running the Application
 
-## Clean
+To run the application, use the following Gradle command:
+```bash
+./gradlew run
+```
 
-1. **Navigate to the `src` directory**:
-  ```bash
-  cd Elevator/src
-  ```
-2. **Delete the class files**:
-  ```bash
-  rm -rf elevator/*.class
-  ```
+## Testing the Application
+
+JUnit 5 is used for testing. To run the tests, execute:
+```bash
+./gradlew test
+```
+
+## Clean the build artifacts
+
+Gradle generates various build artifacts during the build process. You can remove these generated files using Gradle’s clean task:
+```bash
+./gradlew clean
+```

@@ -9,7 +9,7 @@ public class ElevatorGUI {
 
     private Elevator elevator;
     private JLabel currentFloorLabel;
-    private JTextArea outputTextArea;
+    private JLabel directionLabel;
 
     public ElevatorGUI(Elevator elevator) {
         this.elevator = elevator;
@@ -23,22 +23,26 @@ public class ElevatorGUI {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
+        // Current floor label
         currentFloorLabel = new JLabel("Current Floor: 1", JLabel.CENTER);
         panel.add(currentFloorLabel, BorderLayout.NORTH);
 
-        JPanel buttonPanel = new JPanel();
+        // Direction label
+        directionLabel = new JLabel("Direction: Stopped", JLabel.CENTER);
+        panel.add(directionLabel, BorderLayout.SOUTH);
 
+        // Buttons to control the elevator
+        JPanel buttonPanel = new JPanel();
         int totalFloors = elevator.getTotalFloors();
         int columns = Math.min(5, totalFloors);
         int rows = (int) Math.ceil((double) totalFloors / columns);
-
         buttonPanel.setLayout(new GridLayout(rows, columns));
 
         for (int i = 0; i < totalFloors; i++) {
             int floor = i + 1;
             String buttonText = (floor == 1)
                 ? "Ground Floor"
-                : "Floor " + floor; // Set first floor to "Ground Floor"
+                : "Floor " + floor;
 
             JButton button = new JButton(buttonText);
             button.setPreferredSize(new Dimension(80, 40));
@@ -46,9 +50,6 @@ public class ElevatorGUI {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         elevator.addFloorToVisit(floor - 1);
-                        currentFloorLabel.setText(
-                            "Current Floor: " + elevator.getCurrentFloor()
-                        );
                         elevator.visitFloors(ElevatorGUI.this);
                     }
                 }
@@ -57,16 +58,6 @@ public class ElevatorGUI {
         }
 
         panel.add(buttonPanel, BorderLayout.CENTER);
-
-        // Output Text Area for elevator actions
-        outputTextArea = new JTextArea();
-        outputTextArea.setEditable(false);
-        outputTextArea.setLineWrap(true);
-        outputTextArea.setWrapStyleWord(true);
-
-        JScrollPane scrollPane = new JScrollPane(outputTextArea);
-        panel.add(scrollPane, BorderLayout.SOUTH);
-
         frame.add(panel);
         frame.setVisible(true);
     }
@@ -75,10 +66,7 @@ public class ElevatorGUI {
         currentFloorLabel.setText("Current Floor: " + currentFloor);
     }
 
-    public void appendToOutput(String message) {
-        outputTextArea.append(message + "\n");
-        outputTextArea.setCaretPosition(
-            outputTextArea.getDocument().getLength()
-        );
+    public void updateDirection(String direction) {
+        directionLabel.setText("Direction: " + direction);
     }
 }
